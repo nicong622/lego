@@ -10,10 +10,9 @@ export interface DragItem {
 
 interface PropsType extends DragItem {
 	moveCard: (dragIndex: number, hoverIndex: number) => void;
-	children: JSX.Element;
 }
 
-export default function Dragable(props: PropsType) {
+const Dragable: React.FC<PropsType> = (props) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [{ handlerId }, drop] = useDrop({
 		accept: 'dragable',
@@ -83,6 +82,7 @@ export default function Dragable(props: PropsType) {
 
 	const opacity = isDragging ? 0 : 1;
 	drag(drop(ref));
+
 	return (
 		<div
 			ref={ref}
@@ -94,3 +94,5 @@ export default function Dragable(props: PropsType) {
 		</div>
 	);
 }
+
+export default Dragable;

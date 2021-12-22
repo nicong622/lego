@@ -1,26 +1,23 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ComponentType } from 'react';
 import { useDrop } from 'react-dnd';
-import dynamic from 'next/dynamic';
+import { dynamicImport } from '@utils';
 import update from 'immutability-helper';
 import Dragable from './Dragable';
+import ConfigerWrapper from './ConfigerWrapper';
 import { uniqueId } from '@utils';
+import globalState, { useGlobalState } from 'store';
 
 import type { DragItem } from './GalleryItem';
 
 interface ChildType {
 	name: string;
 	id: string;
-	el: JSX.Element;
-}
-
-const basePath = './stage/';
-
-function dynamicImport(name: string) {
-	return dynamic(() => import(`${basePath}${name}`));
+	el: ComponentType;
 }
 
 const Stage: React.FC = () => {
 	const [children, setChildren] = useState<ChildType[]>([]);
+  const state = useGlobalState(globalState)
 
 	const moveCard = useCallback(
 		(dragIndex: number, hoverIndex: number) => {
@@ -49,7 +46,7 @@ const Stage: React.FC = () => {
 					{
 						name: dragItem.name,
 						id: `${dragItem.name}_${uniqueId()}`,
-						el: <Comp />,
+						el: Comp,
 					},
 				]);
 			},
@@ -62,7 +59,7 @@ const Stage: React.FC = () => {
 
 	function renderChildren(components: ChildType[]): JSX.Element[] {
 		return components.map((item, index) => {
-			const { name, id, el } = item;
+			const { name, id, el: El } = item;
 
 			return (
 				<Dragable
@@ -72,7 +69,9 @@ const Stage: React.FC = () => {
 					name={name}
 					id={id}
 				>
-          {el}
+					<ConfigerWrapper name={name} id={id}>
+            <El {...state.get()[id]} />
+          </ConfigerWrapper>
 				</Dragable>
 			);
 		});

@@ -9,7 +9,7 @@ const ConfigPanel: React.FC<PropsType> = () => {
   const defaultState = state.compProps.nested(state.focusing.get())
 
   const compName = state.get().focusing.split('_')[0]
-  const ConfigForm = compName ? dynamicImport<ConfigProps<object>>(`${compName}/config.tsx`) : 'div'
+  const ConfigForm = compName ? dynamicImport<ConfigProps<object>>(`${compName}/config`) : 'div'
 
   function onChange(value: object) {
     defaultState.set(value)

@@ -5,21 +5,21 @@ interface PropsType {
 	id: string;
 }
 
-const ConfigerWrapper: React.FC<PropsType> = (props) => {
+const ConfigWrapper: React.FC<PropsType> = (props) => {
 	const state = useGlobalState(globalState);
 
 	function setFocusing() {
 		const { id } = props;
 
-		state.set({
-			focusing: id,
-			[id]: {},
-		});
+		state.focusing.set(id)
+		state.compProps.merge(p => ({
+			[id]: p[id] || { color: 'black' } // TODO 替换成组件的默认值
+		}));
 	}
 
 	return (
 		<div className='relative'>
-			{props.children}
+			{ props.children }
 
 			<button className='absolute bottom-0 right-0' onClick={setFocusing}>
 				配置
@@ -28,4 +28,4 @@ const ConfigerWrapper: React.FC<PropsType> = (props) => {
 	);
 };
 
-export default ConfigerWrapper;
+export default ConfigWrapper;

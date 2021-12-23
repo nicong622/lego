@@ -21,6 +21,9 @@
       "@components/*": ["components/*"],
       "@store": ["store/index.ts"],
       "@hooks/*": ["hooks/*"],
+      "@types/*": ["types/*"],
+      "@types": ["types/index.d.ts"],
+      "@bricks/*": ["bricks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

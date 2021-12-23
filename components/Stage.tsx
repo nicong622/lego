@@ -3,7 +3,8 @@ import { useDrop } from 'react-dnd';
 import { dynamicImport } from '@utils';
 import update from 'immutability-helper';
 import Dragable from './Dragable';
-import ConfigerWrapper from './ConfigerWrapper';
+import ConfigWrapper from './ConfigWrapper';
+import StateWrapper from './StateWrapper';
 import { uniqueId } from '@utils';
 import globalState, { useGlobalState } from 'store';
 
@@ -69,9 +70,11 @@ const Stage: React.FC = () => {
 					name={name}
 					id={id}
 				>
-					<ConfigerWrapper name={name} id={id}>
-            <El {...state.get()[id]} />
-          </ConfigerWrapper>
+					<ConfigWrapper name={name} id={id}>
+            <StateWrapper state={state.compProps.nested(id)}>
+              <El />
+            </StateWrapper>
+          </ConfigWrapper>
 				</Dragable>
 			);
 		});
@@ -79,7 +82,6 @@ const Stage: React.FC = () => {
 
 	return (
 		<div
-			role={'Dustbin'}
 			ref={drop}
 			className='stage w-375px h-667px border mr-4'
 		>

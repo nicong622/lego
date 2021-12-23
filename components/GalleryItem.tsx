@@ -19,7 +19,7 @@ const GalleryItem: React.FC<PropsType> = (props) => {
 	}));
 
 	return (
-		<div role='Box' ref={drag} key={props.id} className='w-80px h-40px border border-dashed rounded text-center p-1 m-1'>
+		<div ref={drag} key={props.id} className='w-80px h-40px border border-dashed rounded text-center p-1 m-1'>
 			{props.name}
 		</div>
 	);

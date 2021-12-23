@@ -4,7 +4,7 @@ function importAll(r): string[] {
 	return r.keys();
 }
 
-const galleryList = importAll(require.context('./stage/', true, /\.\/(\w+)(\/\w+)*\.tsx$/))
+const galleryList = importAll(require.context('/bricks/', true, /\.\/(\w+)(\/\w+)*\.tsx$/))
 	.map((filename) => /\.\/(\w+)(\/index)*\.tsx$/.exec(filename)?.[1])
 	.filter(Boolean)
 	.map((name) => ({ name: name as string }));

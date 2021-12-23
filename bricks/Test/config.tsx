@@ -1,13 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { TestProps } from './index';
+import type { ConfigProps } from '@types';
 
-export interface ConfigProps {
-  value: TestProps
-  onChange: (params: TestProps) => void
-}
-
-export default function TestConfig(props: ConfigProps) {
+export default function TestConfig(props: ConfigProps<TestProps>) {
 	const [color, onChange] = useState(props.value.color);
 
 	function onConfirm() {

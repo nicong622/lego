@@ -1,30 +1,25 @@
-import {useState} from 'react';
 import globalState, { useGlobalState } from 'store';
 import { dynamicImport } from '@utils';
+import type { ConfigProps } from '@types';
 
 interface PropsType {}
 
 const ConfigPanel: React.FC<PropsType> = () => {
   const state = useGlobalState(globalState)
+  const defaultState = state.compProps.nested(state.focusing.get())
+
   const compName = state.get().focusing.split('_')[0]
-  const ConfigForm = dynamicImport(`${compName}/config.tsx`)
-  const [initialValue, setState] = useState({ color: 'black' })
+  const ConfigForm = compName ? dynamicImport<ConfigProps<object>>(`${compName}/config.tsx`) : 'div'
 
-  function onChange(value: unknown) {
-    const focusing = state.get().focusing
-
-    setState(value)
-    state.set({
-      ...state.get(),
-      [focusing]: value
-    })
+  function onChange(value: object) {
+    defaultState.set(value)
   }
 
   return (
     <div>
       <p>focusing on {state.get().focusing}</p>
 
-      <ConfigForm value={initialValue} onChange={onChange} />
+      <ConfigForm onChange={onChange} value={defaultState.get()} />
     </div>
   )
 }

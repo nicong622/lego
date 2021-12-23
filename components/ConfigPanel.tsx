@@ -1,10 +1,9 @@
 import globalState, { useGlobalState } from 'store';
 import { dynamicImport } from '@utils';
 import type { ConfigProps } from '@types';
+import { HTMLAttributes } from 'react';
 
-interface PropsType {}
-
-const ConfigPanel: React.FC<PropsType> = () => {
+const ConfigPanel: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
   const state = useGlobalState(globalState)
   const defaultState = state.compProps.nested(state.focusing.get())
 
@@ -16,7 +15,7 @@ const ConfigPanel: React.FC<PropsType> = () => {
   }
 
   return (
-    <div>
+    <div className={props.className}>
       <p>focusing on {state.get().focusing}</p>
 
       <ConfigForm onChange={onChange} value={defaultState.get()} />

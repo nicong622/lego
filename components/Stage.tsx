@@ -1,5 +1,6 @@
-import { useState, useCallback, ComponentType } from 'react';
+import { useState, useCallback, ComponentType, HTMLAttributes } from 'react';
 import { useDrop } from 'react-dnd';
+import classnames from 'classnames';
 import { dynamicImport } from '@utils';
 import update from 'immutability-helper';
 import Dragable from './Dragable';
@@ -16,7 +17,7 @@ interface ChildType {
 	el: ComponentType;
 }
 
-const Stage: React.FC = () => {
+const Stage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 	const [children, setChildren] = useState<ChildType[]>([]);
   const state = useGlobalState(globalState)
 
@@ -83,7 +84,7 @@ const Stage: React.FC = () => {
 	return (
 		<div
 			ref={drop}
-			className='stage w-375px h-667px border mr-4'
+			className={classnames('stage w-375px h-667px border', props.className)}
 		>
 			{renderChildren(children)}
 		</div>

@@ -9,9 +9,9 @@ export default function Lego() {
 	return (
 		<div className='flex'>
 			<DndProvider backend={HTML5Backend}>
-				<Stage />
-				<Gallery />
-        <ConfigPanel />
+				<Stage className="mr-4" />
+				<Gallery className="mr-4" />
+        <ConfigPanel className="mr-4" />
 			</DndProvider>
 		</div>
 	);

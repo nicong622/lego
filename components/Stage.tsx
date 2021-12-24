@@ -1,13 +1,13 @@
 import { useState, useCallback, ComponentType, HTMLAttributes } from 'react';
 import { useDrop } from 'react-dnd';
 import classnames from 'classnames';
-import { dynamicImport } from '@utils';
 import update from 'immutability-helper';
 import Dragable from './Dragable';
 import ConfigWrapper from './ConfigWrapper';
 import StateWrapper from './StateWrapper';
 import { uniqueId } from '@utils';
 import globalState, { useGlobalState } from 'store';
+import dynamic from 'next/dynamic';
 
 import type { DragItem } from './GalleryItem';
 
@@ -19,7 +19,7 @@ interface ChildType {
 
 const Stage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 	const [children, setChildren] = useState<ChildType[]>([]);
-  const state = useGlobalState(globalState)
+	const state = useGlobalState(globalState);
 
 	const moveCard = useCallback(
 		(dragIndex: number, hoverIndex: number) => {
@@ -41,7 +41,7 @@ const Stage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 			accept: 'box',
 			drop: (item, monitor) => {
 				const dragItem = monitor.getItem<DragItem>();
-				const Comp = dynamicImport(dragItem.name);
+				const Comp = dynamic(() => import(`bricks/${dragItem.name}`).then(mod => mod.App));
 
 				setChildren([
 					...children,
@@ -72,10 +72,10 @@ const Stage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 					id={id}
 				>
 					<ConfigWrapper name={name} id={id}>
-            <StateWrapper state={state.compProps.nested(id)}>
-              <El />
-            </StateWrapper>
-          </ConfigWrapper>
+						<StateWrapper state={state.compProps.nested(id)}>
+							<El />
+						</StateWrapper>
+					</ConfigWrapper>
 				</Dragable>
 			);
 		});

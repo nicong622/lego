@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { TestProps } from './index';
+import type { TestProps } from './App';
 import type { ConfigProps } from '@types';
 
 export default function TestConfig(props: ConfigProps<TestProps>) {
@@ -34,7 +34,9 @@ export default function TestConfig(props: ConfigProps<TestProps>) {
 				/>
 			</div>
 
-			<button className='border px-4 py-1 rounded' onClick={onConfirm}>确认</button>
+			<button className='border px-4 py-1 rounded' onClick={onConfirm}>
+				确认
+			</button>
 		</div>
 	);
 }

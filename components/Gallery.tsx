@@ -2,11 +2,13 @@ import GalleryItem from './GalleryItem';
 import classnames from 'classnames';
 import { HTMLAttributes } from 'react';
 
-const galleryList = require.context('/bricks/', true, /\.\/(\w+)(\/\w+)*\.tsx$/)
-	.keys()
-	.map((filename) => /\.\/(\w+)(\/index)*\.tsx$/.exec(filename)?.[1])
-	.filter(Boolean)
-	.map((name) => ({ name: name as string }));
+// const galleryList = require.context('/bricks/', true, /\.\/(\w+)(\/\w+)*\.tsx$/)
+// 	.keys()
+// 	.map((filename) => /\.\/(\w+)(\/index)*\.tsx$/.exec(filename)?.[1])
+// 	.filter(Boolean)
+// 	.map((name) => ({ name: name as string }))
+
+const galleryList = [{ name: 'Test' }];
 
 const Gallery: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 	return (

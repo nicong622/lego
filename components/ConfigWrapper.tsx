@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import globalState, { useGlobalState } from 'store';
 
 interface PropsType {
@@ -12,10 +13,21 @@ const ConfigWrapper: React.FC<PropsType> = (props) => {
 		const { id } = props;
 
 		state.focusing.set(id)
-		state.compProps.merge(p => ({
-			[id]: p[id] || { color: 'black' } // TODO 替换成组件的默认值
-		}));
+		state.compProps.merge(p => ({	[id]: p[id] }));
 	}
+
+	// 加载默认状态
+	useEffect(() => {
+		let defaultData = {}
+
+		try {
+			defaultData = require(`/bricks/${props.name}/default.json`)
+		} catch (error) {
+			console.warn('[lego error][at ConfigWrapper] ', error);
+		}
+
+		state.compProps.merge({ [props.id]: defaultData })
+	}, [props.id, props.name])
 
 	return (
 		<div className='relative'>

@@ -8,7 +8,6 @@ import StateWrapper from './StateWrapper';
 import { uniqueId } from '@utils';
 import globalState, { useGlobalState } from 'store';
 import dynamic from 'next/dynamic';
-
 import type { DragItem } from './GalleryItem';
 
 interface ChildType {
@@ -39,16 +38,16 @@ const Stage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 	const [{ result }, drop] = useDrop(
 		() => ({
 			accept: 'box',
-			drop: (item, monitor) => {
+			drop: async (item, monitor) => {
 				const dragItem = monitor.getItem<DragItem>();
-				const Comp = dynamic(() => import(`bricks/${dragItem.name}`).then(mod => mod.App));
+				const El = dynamic(() => import(`bricks/${dragItem.name}`).then(mod => mod.App))
 
 				setChildren([
 					...children,
 					{
 						name: dragItem.name,
 						id: `${dragItem.name}_${uniqueId()}`,
-						el: Comp,
+						el: El,
 					},
 				]);
 			},

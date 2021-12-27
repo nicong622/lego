@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import type { TestProps } from './App';
-import type { ConfigProps } from '@types';
+
+export interface ConfigProps<T extends object> {
+  value: T
+  onChange: (params: T) => void
+}
 
 export default function TestConfig(props: ConfigProps<TestProps>) {
 	const [color, changeColor] = useState(props.value.color);
